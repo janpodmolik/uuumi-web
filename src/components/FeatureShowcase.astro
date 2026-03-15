@@ -1,0 +1,113 @@
+---
+const features = [
+  {
+    title: 'Wind System',
+    description: 'The more you scroll, the harder the wind blows. Your pet feels every minute you spend in blocked apps.',
+    image: '/images/screenshots/wind-system.png',
+  },
+  {
+    title: 'Shield & Lock',
+    description: 'Uuumi blocks distracting apps when the wind gets too strong. A gentle nudge to put your phone down.',
+    image: '/images/screenshots/shield-screen.png',
+  },
+  {
+    title: 'Breaks',
+    description: 'Take a break from your phone. The wind calms down, and your pet gets to rest too.',
+    image: '/images/screenshots/breaks.png',
+  },
+  {
+    title: 'Daily Streaks',
+    description: 'Build daily streaks by respecting your limits. Watch your pet thrive day after day.',
+    image: '/images/screenshots/streaks.png',
+  },
+];
+---
+
+<section class="features" id="features">
+  <div class="container">
+    <h2 class="section-title reveal">Features</h2>
+    {features.map((feature, index) => (
+      <div class:list={['feature-row', 'reveal', { reversed: index % 2 !== 0 }]}>
+        <div class="feature-text">
+          <h3>{feature.title}</h3>
+          <p>{feature.description}</p>
+        </div>
+        <div class="feature-image">
+          <img src={feature.image} alt={`${feature.title} screenshot`} loading="lazy" />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .features {
+    padding: var(--section-padding);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 4rem;
+  }
+
+  .feature-row {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    margin-bottom: 5rem;
+  }
+
+  .feature-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .feature-row.reversed {
+    flex-direction: row-reverse;
+  }
+
+  .feature-text {
+    flex: 1;
+  }
+
+  .feature-text h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-text p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .feature-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .feature-image img {
+    max-width: 300px;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .feature-row,
+    .feature-row.reversed {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .feature-image img {
+      max-width: 240px;
+    }
+  }
+</style>

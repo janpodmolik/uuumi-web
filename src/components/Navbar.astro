@@ -1,0 +1,82 @@
+<nav class="navbar">
+  <div class="container nav-content">
+    <div class="nav-left">
+      <a href="/" class="nav-logo">
+        <img src="/images/pets/blob-happy.png" alt="Uuumi" class="logo-img" />
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#how-it-works" class="nav-link">How it works</a>
+      <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1rem 0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-cta {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: white;
+    background: var(--accent);
+    padding: 0.55rem 1.25rem;
+    border-radius: 99px;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent-hover);
+  }
+
+  @media (max-width: 640px) {
+    .nav-link {
+      display: none;
+    }
+  }
+</style>

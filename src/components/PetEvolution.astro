@@ -1,0 +1,118 @@
+---
+const evolutions = [
+  { name: 'Plant', phases: ['blob-happy', 'plant-phase1', 'plant-phase4'], rarity: 'Common' },
+  { name: 'Troll', phases: ['blob-happy', 'troll-phase1', 'troll-phase3'], rarity: 'Rare' },
+  { name: 'Lion', phases: ['blob-happy', 'lion-phase1', 'lion-phase3'], rarity: 'Rare' },
+  { name: 'Racoon', phases: ['blob-happy', 'racoon-phase1', 'racoon-phase3'], rarity: 'Rare' },
+];
+---
+
+<section class="evolution">
+  <div class="container">
+    <h2 class="section-title reveal">Watch your pet evolve</h2>
+    <p class="section-subtitle reveal">
+      9 unique evolution paths. Earn essences, unlock new creatures.
+    </p>
+    <div class="evolution-grid">
+      {evolutions.map((evo) => (
+        <div class="evolution-card reveal">
+          <div class="evolution-phases">
+            {evo.phases.map((phase, index) => (
+              <Fragment>
+                <img src={`/images/pets/${phase}.png`} alt={`${evo.name} phase ${index}`} />
+                {index < evo.phases.length - 1 && <span class="arrow">&rarr;</span>}
+              </Fragment>
+            ))}
+          </div>
+          <h3>{evo.name}</h3>
+          <span class:list={['rarity', evo.rarity.toLowerCase()]}>{evo.rarity}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .evolution {
+    padding: var(--section-padding);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+  }
+
+  .evolution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .evolution-card {
+    background: var(--bg-subtle);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .evolution-phases {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .evolution-phases img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+
+  .arrow {
+    color: var(--text-tertiary);
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .rarity {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.2rem 0.65rem;
+    border-radius: 99px;
+  }
+
+  .rarity.common {
+    background: var(--border);
+    color: var(--text-secondary);
+  }
+
+  .rarity.rare {
+    background: rgba(0, 122, 255, 0.08);
+    color: #007aff;
+  }
+
+  @media (max-width: 640px) {
+    .evolution-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .evolution-phases img {
+      width: 48px;
+      height: 48px;
+    }
+  }
+</style>

@@ -1,0 +1,91 @@
+---
+const steps = [
+  {
+    number: '1',
+    title: 'Choose your apps',
+    description: 'Pick which apps Uuumi monitors. Social media, games, whatever distracts you.',
+  },
+  {
+    number: '2',
+    title: 'Set your limits',
+    description: 'Choose gentle, balanced, or intense mode. Start easy and build up.',
+  },
+  {
+    number: '3',
+    title: 'Meet your pet',
+    description: 'Your pet reacts to your habits in real-time. Keep them happy by staying present.',
+  },
+];
+---
+
+<section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <h2 class="section-title reveal">How it works</h2>
+    <div class="steps">
+      {steps.map((step) => (
+        <div class="step reveal">
+          <div class="step-number">{step.number}</div>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .how-it-works {
+    padding: var(--section-padding);
+    background: linear-gradient(to bottom, var(--bg), var(--sky-4), var(--sky-3));
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 3.5rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .step h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .step p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .steps {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+  }
+</style>

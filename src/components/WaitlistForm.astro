@@ -1,0 +1,146 @@
+<form class="waitlist-form" id="waitlist-form">
+  <div class="form-row">
+    <input
+      type="email"
+      name="email"
+      placeholder="your@email.com"
+      required
+      autocomplete="email"
+    />
+    <button type="submit">Join the Waitlist</button>
+  </div>
+  <p class="form-message" id="form-message"></p>
+</form>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  const SUPABASE_URL = 'https://owodjfgrmtltmfpqvlot.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93b2RqZmdybXRsdG1mcHF2bG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1MjA5MDUsImV4cCI6MjA4NjA5NjkwNX0.7Lb0Ke204EEvNLEOq1i9lx0T8UnvM_xWDaRHGadRwAg';
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  document.querySelectorAll<HTMLFormElement>('#waitlist-form').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const email = formData.get('email') as string;
+      const message = form.querySelector('#form-message') as HTMLParagraphElement;
+      const button = form.querySelector('button') as HTMLButtonElement;
+
+      button.disabled = true;
+      button.textContent = 'Joining...';
+
+      try {
+        const { error } = await supabase
+          .from('waitlist')
+          .insert({ email });
+
+        if (error) {
+          if (error.code === '23505') {
+            message.textContent = "You're already on the list!";
+            message.className = 'form-message success';
+          } else {
+            throw error;
+          }
+        } else {
+          message.textContent = "You're on the waitlist!";
+          message.className = 'form-message success';
+          form.reset();
+        }
+      } catch {
+        message.textContent = 'Something went wrong. Please try again.';
+        message.className = 'form-message error';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Join the Waitlist';
+      }
+    });
+  });
+</script>
+
+<style>
+  .waitlist-form {
+    width: 100%;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 440px;
+  }
+
+  .form-row :global(:root) .form-row {
+    /* centered when inside centered parent */
+  }
+
+  input[type='email'] {
+    flex: 1;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--bg);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  input[type='email']:focus {
+    border-color: var(--accent);
+  }
+
+  button {
+    padding: 0.85rem 1.5rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 99px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  button:active {
+    transform: translateY(0);
+  }
+
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-message {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    min-height: 1.4em;
+  }
+
+  .form-message.success {
+    color: var(--accent);
+  }
+
+  .form-message.error {
+    color: var(--wind-high);
+  }
+
+  @media (max-width: 480px) {
+    .form-row {
+      flex-direction: column;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+</style>
