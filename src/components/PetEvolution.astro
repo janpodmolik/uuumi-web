@@ -19,7 +19,7 @@ const evolutions = [
           <div class="evolution-phases">
             {evo.phases.map((phase, index) => (
               <Fragment>
-                <img src={`/images/pets/${phase}.png`} alt={`${evo.name} phase ${index}`} />
+                <img src={`${import.meta.env.BASE_URL}images/pets/${phase}.png`} alt={`${evo.name} phase ${index}`} />
                 {index < evo.phases.length - 1 && <span class="arrow">&rarr;</span>}
               </Fragment>
             ))}
