@@ -29,9 +29,9 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://uuumi.app');
     <meta name="twitter:image" content="https://uuumi.app/og-image.png" />
 
     <link rel="canonical" href={canonicalURL.href} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}favicon.png`} />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
+    <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}favicon.png`} />
 
     <title>{title}</title>
 
