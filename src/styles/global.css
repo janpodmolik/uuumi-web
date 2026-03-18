@@ -1,22 +1,8 @@
 /* Uuumi Design System */
 :root {
-  /* Sky gradient (Morning Haze from app) */
-  --sky-1: rgb(173, 191, 217);
-  --sky-2: rgb(199, 204, 217);
-  --sky-3: rgb(230, 217, 209);
-  --sky-4: rgb(237, 209, 191);
-
   /* Brand */
   --accent: #34C759;
   --accent-hover: #2db84e;
-
-  /* Neutral */
-  --text-primary: #111;
-  --text-secondary: #666;
-  --text-tertiary: #999;
-  --bg: #fff;
-  --bg-subtle: #f9f9f9;
-  --border: #eee;
 
   /* Wind level colors */
   --wind-none: #FFD60A;
@@ -27,6 +13,46 @@
   /* Layout */
   --max-width: 1200px;
   --section-padding: 6rem 0;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --sky-1: rgb(173, 191, 217);
+  --sky-2: rgb(199, 204, 217);
+  --sky-3: rgb(230, 217, 209);
+  --sky-4: rgb(237, 209, 191);
+  --text-primary: #111;
+  --text-secondary: #666;
+  --text-tertiary: #999;
+  --bg: #fff;
+  --bg-subtle: #f9f9f9;
+  --border: #eee;
+  --navbar-bg: rgba(255, 255, 255, 0.85);
+  --input-bg: #fff;
+  --rarity-rare-bg: rgba(0, 122, 255, 0.08);
+  --rarity-rare-color: #007aff;
+  --rarity-common-bg: #eee;
+  --rarity-common-color: #666;
+}
+
+/* Dark theme (Twilight from app) */
+[data-theme="dark"] {
+  --sky-1: rgb(31, 26, 77);
+  --sky-2: rgb(64, 46, 115);
+  --sky-3: rgb(115, 77, 140);
+  --sky-4: rgb(140, 89, 128);
+  --text-primary: #f0f0f0;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-tertiary: rgba(255, 255, 255, 0.45);
+  --bg: rgb(18, 14, 40);
+  --bg-subtle: rgb(28, 22, 58);
+  --border: rgba(255, 255, 255, 0.1);
+  --navbar-bg: rgba(18, 14, 40, 0.85);
+  --input-bg: rgb(28, 22, 58);
+  --rarity-rare-bg: rgba(100, 160, 255, 0.15);
+  --rarity-rare-color: #64a0ff;
+  --rarity-common-bg: rgba(255, 255, 255, 0.08);
+  --rarity-common-color: rgba(255, 255, 255, 0.6);
 }
 
 /* Reset */
@@ -88,6 +114,12 @@ a {
 .floating {
   animation: float 3.5s ease-in-out infinite;
 }
+
+/* Theme toggle icons */
+[data-theme="light"] .icon-sun { display: none !important; }
+[data-theme="light"] .icon-moon { display: block !important; color: #555; }
+[data-theme="dark"] .icon-moon { display: none !important; }
+[data-theme="dark"] .icon-sun { display: block !important; color: #f5c542; }
 
 @media (max-width: 768px) {
   :root {
