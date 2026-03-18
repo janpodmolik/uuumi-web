@@ -121,6 +121,12 @@ a {
 [data-theme="dark"] .icon-moon { display: none !important; }
 [data-theme="dark"] .icon-sun { display: block !important; color: #f5c542; }
 
+/* Theme-aware screenshots */
+[data-theme="light"] .screenshot-dark { display: none !important; }
+[data-theme="light"] .screenshot-light { display: block !important; }
+[data-theme="dark"] .screenshot-light { display: none !important; }
+[data-theme="dark"] .screenshot-dark { display: block !important; }
+
 @media (max-width: 768px) {
   :root {
     --section-padding: 4rem 0;
