@@ -1,33 +1,61 @@
 ---
-const evolutions = [
-  { name: 'Plant', phases: ['blob-happy', 'plant-phase1', 'plant-phase4'], rarity: 'Common' },
-  { name: 'Troll', phases: ['blob-happy', 'troll-phase1', 'troll-phase3'], rarity: 'Rare' },
-  { name: 'Lion', phases: ['blob-happy', 'lion-phase1', 'lion-phase3'], rarity: 'Rare' },
-  { name: 'Racoon', phases: ['blob-happy', 'racoon-phase1', 'racoon-phase3'], rarity: 'Rare' },
+const base = import.meta.env.BASE_URL;
+
+const plantPhases = [
+  { img: 'evolutions/plant1', size: 72 },
+  { img: 'evolutions/plant2', size: 80 },
+];
+
+const essences = [
+  { name: 'Plant', id: 'plant' },
+  { name: 'Troll', id: 'troll' },
+  { name: 'Orc', id: 'orc' },
+  { name: 'Clicker', id: 'clicker' },
+  { name: 'Lion', id: 'lion' },
+  { name: 'Stitches', id: 'stitches' },
+  { name: 'Racoon', id: 'racoon' },
+  { name: 'Moss', id: 'moss' },
+  { name: 'Shroom', id: 'shroom' },
 ];
 ---
 
-<section class="evolution">
+<section class="evolution" id="evolution">
   <div class="container">
-    <h2 class="section-title reveal">Watch your pet evolve</h2>
+    <h2 class="section-title reveal">Watch your Uuumi evolve</h2>
     <p class="section-subtitle reveal">
-      9 unique evolution paths. Earn essences, unlock new creatures.
+      Help your Uuumi survive its first day and reward it with an essence.
     </p>
-    <div class="evolution-grid">
-      {evolutions.map((evo) => (
-        <div class="evolution-card reveal">
-          <div class="evolution-phases">
-            {evo.phases.map((phase, index) => (
-              <Fragment>
-                <img src={`${import.meta.env.BASE_URL}images/pets/${phase}.png`} alt={`${evo.name} phase ${index}`} />
-                {index < evo.phases.length - 1 && <span class="arrow">&rarr;</span>}
-              </Fragment>
-            ))}
+
+    <!-- Essence carousel -->
+    <div class="essence-carousel reveal">
+      <div class="essence-track">
+        {essences.map((ess) => (
+          <div class="essence-item">
+            <img src={`${base}images/essences/${ess.id}.png`} alt={`${ess.name} essence`} />
+            <span class="essence-name">{ess.name}</span>
           </div>
-          <h3>{evo.name}</h3>
-          <span class:list={['rarity', evo.rarity.toLowerCase()]}>{evo.rarity}</span>
-        </div>
-      ))}
+        ))}
+      </div>
+    </div>
+
+    <p class="evolution-heading reveal">
+      Every day your Uuumi survives, it rewards you with an evolution.
+    </p>
+
+    <!-- Plant evolution showcase -->
+    <div class="evolution-card reveal">
+      <div class="evolution-phases">
+        <img src={`${base}images/pets/blob-happy.png`} alt="Blob" class="phase-img" />
+        <span class="symbol">+</span>
+        <img src={`${base}images/essences/plant.png`} alt="Plant essence" class="essence-img" />
+        <span class="symbol">&rarr;</span>
+        {plantPhases.map((phase, index) => (
+          <Fragment>
+            <img src={`${base}images/${phase.img}.png`} alt={`Plant phase ${index + 1}`} class="phase-img" style={`width: ${phase.size}px; height: ${phase.size}px;`} />
+            {index < plantPhases.length - 1 && <span class="symbol">&rarr;</span>}
+          </Fragment>
+        ))}
+      </div>
     </div>
   </div>
 </section>
@@ -35,6 +63,13 @@ const evolutions = [
 <style>
   .evolution {
     padding: var(--section-padding);
+    text-align: center;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .section-title {
@@ -47,70 +82,111 @@ const evolutions = [
   .section-subtitle {
     font-size: 1.1rem;
     color: var(--text-secondary);
-    margin-bottom: 3rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 480px;
   }
 
-  .evolution-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+  /* Essence carousel */
+  .essence-carousel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 0;
   }
 
-  .evolution-card {
-    background: var(--bg-subtle);
-    border-radius: 16px;
-    padding: 2rem 1.5rem;
-    text-align: center;
+  .essence-carousel::-webkit-scrollbar {
+    display: none;
   }
 
-  .evolution-phases {
+  .essence-track {
+    display: inline-flex;
+    gap: 1.25rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .essence-item {
+    flex: 0 0 auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
+    gap: 0.4rem;
+    min-width: 80px;
   }
 
-  .evolution-phases img {
+  .essence-item img {
     width: 56px;
     height: 56px;
     object-fit: contain;
   }
 
-  .arrow {
+  .essence-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* Evolution heading */
+  .evolution-heading {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 3.5rem;
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+  }
+
+  /* Plant evolution card */
+  .evolution-card {
+    background: var(--bg-subtle);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    display: inline-block;
+  }
+
+  .evolution-phases {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .symbol {
     color: var(--text-tertiary);
-    font-size: 1.1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
 
-  h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.35rem;
+  .phase-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
   }
 
-  .rarity {
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 0.2rem 0.65rem;
-    border-radius: 99px;
+  .essence-img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
   }
 
-  .rarity.common {
-    background: var(--rarity-common-bg);
-    color: var(--rarity-common-color);
-  }
-
-  .rarity.rare {
-    background: var(--rarity-rare-bg);
-    color: var(--rarity-rare-color);
-  }
-
-  @media (max-width: 640px) {
-    .evolution-grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 2rem;
     }
 
-    .evolution-phases img {
+    .evolution-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .phase-img {
+      width: 52px;
+      height: 52px;
+    }
+
+    .essence-img {
+      width: 36px;
+      height: 36px;
+    }
+
+    .essence-item img {
       width: 48px;
       height: 48px;
     }
