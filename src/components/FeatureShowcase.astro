@@ -1,25 +1,43 @@
 ---
 const base = import.meta.env.BASE_URL;
-const features = [
-  {
-    title: 'Wind System',
-    description: 'The more you scroll, the harder the wind blows. Your pet feels every minute you spend in blocked apps.',
-    image: `${base}images/screenshots/wind-system.png`,
-  },
+
+interface Feature {
+  title: string;
+  description: string;
+  imageLight: string;
+  imageDark: string;
+  /** Second pair of images for dual-screenshot layout */
+  imageLight2?: string;
+  imageDark2?: string;
+}
+
+const windStates = [
+  { label: 'Light Breeze', light: `${base}images/screenshots/feature_wind_low_light.PNG`, dark: `${base}images/screenshots/feature_wind_low_dark.PNG` },
+  { label: 'Moderate Wind', light: `${base}images/screenshots/feature_wind_medium_light.PNG`, dark: `${base}images/screenshots/feature_wind_medium_dark.PNG` },
+  { label: 'Strong Gust', light: `${base}images/screenshots/feature_wind_high_light.PNG`, dark: `${base}images/screenshots/feature_wind_high_dark.PNG` },
+  { label: 'Settling', light: `${base}images/screenshots/feature_wind_break_light.PNG`, dark: `${base}images/screenshots/feature_wind_break_dark.PNG` },
+];
+
+const features: Feature[] = [
   {
     title: 'Shield & Lock',
-    description: 'Uuumi blocks distracting apps when the wind gets too strong. A gentle nudge to put your phone down.',
-    image: `${base}images/screenshots/shield-screen.png`,
+    description: 'Uuumi blocks distracting apps when the wind gets too strong. Set your limits, take breaks, and let your pet rest.',
+    imageLight: `${base}images/screenshots/feature_lock_light.png`,
+    imageDark: `${base}images/screenshots/feature_lock_dark.png`,
   },
   {
-    title: 'Breaks',
-    description: 'Take a break from your phone. The wind calms down, and your pet gets to rest too.',
-    image: `${base}images/screenshots/breaks.png`,
+    title: 'Graph & History',
+    description: 'Track your screen time with detailed graphs and history. See your trends over time and watch your progress.',
+    imageLight: `${base}images/screenshots/feature_graph_light.png`,
+    imageDark: `${base}images/screenshots/feature_graph_dark.png`,
+    imageLight2: `${base}images/screenshots/feature_history_light.png`,
+    imageDark2: `${base}images/screenshots/feature_history_dark.png`,
   },
   {
-    title: 'Daily Streaks',
-    description: 'Build daily streaks by respecting your limits. Watch your pet thrive day after day.',
-    image: `${base}images/screenshots/streaks.png`,
+    title: 'Evolution',
+    description: 'Your pet evolves as you build better habits. Less screen time means faster growth and new forms to discover.',
+    imageLight: `${base}images/screenshots/feature_evo_light.png`,
+    imageDark: `${base}images/screenshots/feature_evo_dark.png`,
   },
 ];
 ---
@@ -27,19 +45,87 @@ const features = [
 <section class="features" id="features">
   <div class="container">
     <h2 class="section-title reveal">Features</h2>
+
+    <!-- Wind System Carousel -->
+    <div class="feature-row reveal">
+      <div class="feature-text">
+        <h3>Wind System</h3>
+        <p>The more you scroll, the harder the wind blows. Your pet feels every minute you spend on your phone.</p>
+      </div>
+      <div class="feature-image wind-carousel">
+        <div class="carousel-viewport">
+          {windStates.map((state, i) => (
+            <div class:list={['wind-slide', { active: i === 0 }]} data-wind-slide={i}>
+              <img class="screenshot-light" src={state.light} alt={`Wind level: ${state.label}`} loading="lazy" />
+              <img class="screenshot-dark" src={state.dark} alt={`Wind level: ${state.label}`} loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <div class="carousel-dots">
+          {windStates.map((_, i) => (
+            <button class:list={['carousel-dot', { active: i === 0 }]} data-wind-index={i} aria-label={`Slide ${i + 1}`} />
+          ))}
+        </div>
+      </div>
+    </div>
+
     {features.map((feature, index) => (
-      <div class:list={['feature-row', 'reveal', { reversed: index % 2 !== 0 }]}>
+      <div class:list={['feature-row', 'reveal', { reversed: (index + 1) % 2 !== 0 }]}>
         <div class="feature-text">
           <h3>{feature.title}</h3>
           <p>{feature.description}</p>
         </div>
-        <div class="feature-image">
-          <img src={feature.image} alt={`${feature.title} screenshot`} loading="lazy" />
+        <div class:list={['feature-image', { 'feature-image--dual': feature.imageLight2 }]}>
+          <img class="screenshot-light" src={feature.imageLight} alt={`${feature.title} screenshot`} loading="lazy" />
+          <img class="screenshot-dark" src={feature.imageDark} alt={`${feature.title} screenshot`} loading="lazy" />
+          {feature.imageLight2 && (
+            <img class="screenshot-light screenshot-second" src={feature.imageLight2} alt={`${feature.title} detail`} loading="lazy" />
+          )}
+          {feature.imageDark2 && (
+            <img class="screenshot-dark screenshot-second" src={feature.imageDark2} alt={`${feature.title} detail`} loading="lazy" />
+          )}
         </div>
       </div>
     ))}
   </div>
 </section>
+
+<script>
+  const dots = document.querySelectorAll<HTMLButtonElement>('.carousel-dot');
+  const slides = document.querySelectorAll<HTMLElement>('.wind-slide');
+  const viewport = document.querySelector<HTMLElement>('.carousel-viewport');
+  let current = 0;
+  let timer: ReturnType<typeof setInterval>;
+
+  function goTo(index: number) {
+    dots[current]?.classList.remove('active');
+    slides[current]?.classList.remove('active');
+    current = index;
+    dots[current]?.classList.add('active');
+    slides[current]?.classList.add('active');
+  }
+
+  function next() {
+    goTo((current + 1) % slides.length);
+  }
+
+  function resetAutoplay() {
+    clearInterval(timer);
+    timer = setInterval(next, 3000);
+  }
+
+  viewport?.addEventListener('click', () => { next(); resetAutoplay(); });
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goTo(Number(dot.dataset.windIndex));
+      resetAutoplay();
+    });
+  });
+
+  timer = setInterval(next, 3000);
+</script>
 
 <style>
   .features {
@@ -92,8 +178,90 @@ const features = [
   }
 
   .feature-image img {
-    max-width: 300px;
+    max-width: 260px;
     width: 100%;
+  }
+
+  /* Wind Carousel */
+  .wind-carousel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .carousel-viewport {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .wind-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .wind-slide.active {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .carousel-viewport {
+    cursor: pointer;
+  }
+
+  .wind-slide img {
+    max-width: 380px;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .carousel-dots {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: var(--border);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.25s ease;
+  }
+
+  .carousel-dot:hover {
+    background: var(--text-tertiary);
+  }
+
+  .carousel-dot.active {
+    background: var(--accent);
+    transform: scale(1.25);
+  }
+
+  /* Dual screenshot layout */
+  .feature-image--dual {
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .feature-image--dual .screenshot-second {
+    order: -1;
   }
 
   @media (max-width: 768px) {
@@ -108,7 +276,15 @@ const features = [
     }
 
     .feature-image img {
-      max-width: 240px;
+      max-width: 220px;
+    }
+
+    .feature-image--dual {
+      gap: 0.75rem;
+    }
+
+    .wind-slide img {
+      max-width: 280px;
     }
   }
 </style>

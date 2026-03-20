@@ -119,7 +119,7 @@ a {
 [data-theme="light"] .icon-sun { display: none !important; }
 [data-theme="light"] .icon-moon { display: block !important; color: #555; }
 [data-theme="dark"] .icon-moon { display: none !important; }
-[data-theme="dark"] .icon-sun { display: block !important; color: #f5c542; }
+[data-theme="dark"] .icon-sun { display: block !important; color: #fff; }
 
 /* Theme-aware screenshots */
 [data-theme="light"] .screenshot-dark { display: none !important; }
