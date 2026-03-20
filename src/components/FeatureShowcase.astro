@@ -224,7 +224,12 @@ const features: Feature[] = [
     width: 100%;
     height: auto;
     border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+    transition: box-shadow 0.3s ease;
+  }
+
+  :global([data-theme="dark"]) .wind-slide img {
+    box-shadow: 0 4px 32px rgba(160, 120, 220, 0.3), 0 0 60px rgba(140, 100, 200, 0.15);
   }
 
   .carousel-dots {
