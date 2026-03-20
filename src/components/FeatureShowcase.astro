@@ -28,10 +28,10 @@ const features: Feature[] = [
   {
     title: 'Graph & History',
     description: 'Track your screen time with detailed graphs and history. See your trends over time and watch your progress.',
-    imageLight: `${base}images/screenshots/feature_graph_light.png`,
-    imageDark: `${base}images/screenshots/feature_graph_dark.png`,
-    imageLight2: `${base}images/screenshots/feature_history_light.png`,
-    imageDark2: `${base}images/screenshots/feature_history_dark.png`,
+    imageLight: `${base}images/screenshots/feature_history_light.png`,
+    imageDark: `${base}images/screenshots/feature_history_dark.png`,
+    imageLight2: `${base}images/screenshots/feature_graph_light.png`,
+    imageDark2: `${base}images/screenshots/feature_graph_dark.png`,
   },
   {
     title: 'Evolution',
@@ -75,14 +75,22 @@ const features: Feature[] = [
           <h3>{feature.title}</h3>
           <p>{feature.description}</p>
         </div>
-        <div class:list={['feature-image', { 'feature-image--dual': feature.imageLight2 }]}>
-          <img class="screenshot-light" src={feature.imageLight} alt={`${feature.title} screenshot`} loading="lazy" />
-          <img class="screenshot-dark" src={feature.imageDark} alt={`${feature.title} screenshot`} loading="lazy" />
+        <div class:list={['feature-visual', { 'feature-visual--dual': feature.imageLight2 }]}>
+          <div class:list={['feature-image', { 'feature-image--dual': feature.imageLight2 }]}>
+            <img class="screenshot-light" src={feature.imageLight} alt={`${feature.title} screenshot`} loading="lazy" />
+            <img class="screenshot-dark" src={feature.imageDark} alt={`${feature.title} screenshot`} loading="lazy" />
+            {feature.imageLight2 && (
+              <img class="screenshot-light screenshot-second" src={feature.imageLight2} alt={`${feature.title} detail`} loading="lazy" />
+            )}
+            {feature.imageDark2 && (
+              <img class="screenshot-dark screenshot-second" src={feature.imageDark2} alt={`${feature.title} detail`} loading="lazy" />
+            )}
+          </div>
           {feature.imageLight2 && (
-            <img class="screenshot-light screenshot-second" src={feature.imageLight2} alt={`${feature.title} detail`} loading="lazy" />
-          )}
-          {feature.imageDark2 && (
-            <img class="screenshot-dark screenshot-second" src={feature.imageDark2} alt={`${feature.title} detail`} loading="lazy" />
+            <div class="dual-dots">
+              <span class="dual-dot active" />
+              <span class="dual-dot" />
+            </div>
           )}
         </div>
       </div>
@@ -125,6 +133,27 @@ const features: Feature[] = [
   });
 
   timer = setInterval(next, 3000);
+
+  // Dual screenshot scroll indicator
+  document.querySelectorAll<HTMLElement>('.feature-image--dual').forEach((scroller) => {
+    const dualDots = scroller.closest('.feature-visual--dual')?.querySelectorAll<HTMLElement>('.dual-dot');
+    if (!dualDots || dualDots.length === 0) return;
+
+    // Get visible images (theme filtering hides half)
+    const getVisibleImages = () =>
+      Array.from(scroller.querySelectorAll<HTMLElement>('img')).filter(
+        (img) => getComputedStyle(img).display !== 'none'
+      );
+
+    scroller.addEventListener('scroll', () => {
+      const images = getVisibleImages();
+      if (images.length < 2) return;
+      const scrollLeft = scroller.scrollLeft;
+      const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+      const activeIndex = maxScroll > 0 && scrollLeft > maxScroll * 0.5 ? 1 : 0;
+      dualDots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
+    });
+  });
 </script>
 
 <style>
@@ -259,14 +288,28 @@ const features: Feature[] = [
     transform: scale(1.25);
   }
 
+  /* Dual screenshot wrapper */
+  .feature-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .feature-visual--dual {
+    flex-direction: column;
+    align-items: center;
+  }
+
   /* Dual screenshot layout */
   .feature-image--dual {
     gap: 1rem;
     align-items: center;
   }
 
-  .feature-image--dual .screenshot-second {
-    order: -1;
+
+  /* Dual dots (hidden on desktop) */
+  .dual-dots {
+    display: none;
   }
 
   @media (max-width: 768px) {
@@ -284,8 +327,51 @@ const features: Feature[] = [
       max-width: 220px;
     }
 
+    .feature-visual--dual {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+    }
+
     .feature-image--dual {
-      gap: 0.75rem;
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      justify-content: flex-start;
+      width: 100%;
+      padding: 0 12.5%;
+    }
+
+    .feature-image--dual::-webkit-scrollbar {
+      display: none;
+    }
+
+    .feature-image--dual img {
+      flex: 0 0 75%;
+      max-width: none;
+      scroll-snap-align: center;
+    }
+
+    .dual-dots {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .dual-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: all 0.25s ease;
+    }
+
+    .dual-dot.active {
+      background: var(--accent);
+      transform: scale(1.25);
     }
 
     .wind-slide img {
