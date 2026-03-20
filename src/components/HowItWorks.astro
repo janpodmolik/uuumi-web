@@ -2,18 +2,23 @@
 const steps = [
   {
     number: '1',
-    title: 'Choose your apps',
-    description: 'Pick which apps Uuumi monitors. Social media, games, whatever distracts you.',
+    title: 'Pick your distractions',
+    description: 'Choose which apps bring the wind. Social media, games, anything that pulls you in.',
   },
   {
     number: '2',
-    title: 'Set your limits',
-    description: 'Choose gentle, balanced, or intense mode. Start easy and build up.',
+    title: 'Set the wind',
+    description: 'How strong should it blow? Pick a preset — Gentle, Balanced, or Intense. You\'ll choose again each morning.',
   },
   {
     number: '3',
-    title: 'Meet your pet',
-    description: 'Your pet reacts to your habits in real-time. Keep them happy by staying present.',
+    title: 'Name it. Drop it. Grow together.',
+    description: 'Your Uuumi lands on a floating island and reacts to everything you do. Less scrolling, calmer winds, a happier companion.',
+  },
+  {
+    number: '4',
+    title: 'Earn essences. Evolve.',
+    description: 'Protect your Uuumi each day and earn essences. Feed them to unlock new forms. Every evolution is a milestone you built.',
   },
 ];
 ---
@@ -48,7 +53,7 @@ const steps = [
 
   .steps {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 3rem;
   }
 
