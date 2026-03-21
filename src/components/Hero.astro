@@ -19,7 +19,7 @@ import EssenceBanner from './EssenceBanner.astro';
       <WaitlistForm />
       <!-- After launch, replace WaitlistForm with: -->
       <!-- <DownloadButton href="https://apps.apple.com/..." /> -->
-      <p class="hero-note">Be the first to know when Uuumi launches.</p>
+      <p class="hero-note" id="hero-note">Be the first to know when Uuumi launches.</p>
     </div>
     <div class="hero-mockup">
       <img class="screenshot-light" src={`${import.meta.env.BASE_URL}images/screenshots/home-light.png`} alt="Uuumi app screenshot – light mode" />
@@ -34,6 +34,7 @@ import EssenceBanner from './EssenceBanner.astro';
     display: flex;
     align-items: center;
     padding-top: 5rem;
+    padding-bottom: 4rem;
     background: linear-gradient(
       to bottom,
       var(--sky-1),

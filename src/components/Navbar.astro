@@ -8,7 +8,7 @@
     <div class="nav-right">
       <a href="#features" class="nav-link">Features</a>
       <a href="#how-it-works" class="nav-link">How it works</a>
-      <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+      <a href="#waitlist" class="nav-cta" id="nav-waitlist">Join Waitlist</a>
       <button class="theme-btn" id="theme-toggle" aria-label="Toggle theme">
         <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
@@ -42,6 +42,21 @@
   }
 
   setTheme(getPreferredTheme());
+
+  document.getElementById('nav-waitlist')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const forms = document.querySelectorAll<HTMLElement>('#waitlist-form');
+    if (forms.length === 0) return;
+    const scrollY = window.scrollY + window.innerHeight / 2;
+    let closest = forms[0];
+    let minDist = Infinity;
+    forms.forEach((f) => {
+      const dist = Math.abs(f.getBoundingClientRect().top + window.scrollY - scrollY);
+      if (dist < minDist) { minDist = dist; closest = f; }
+    });
+    closest.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    closest.querySelector('input')?.focus({ preventScroll: true });
+  });
 
   document.getElementById('theme-toggle')?.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');

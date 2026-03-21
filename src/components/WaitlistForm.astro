@@ -10,15 +10,27 @@
     <button type="submit">Join the Waitlist</button>
   </div>
   <p class="form-message" id="form-message"></p>
+  <div class="claim-code" id="claim-code">
+    <p class="claim-label">Your OG essence claim code:</p>
+    <span class="claim-value" id="claim-value">UUUBELIVER</span>
+    <p class="claim-hint" id="claim-hint">Tap the code to copy it</p>
+    <p class="claim-expiry">Valid for the first 3 months after release. We'll remind you before launch.</p>
+  </div>
 </form>
 
 <script>
   import { createClient } from '@supabase/supabase-js';
 
-  const SUPABASE_URL = 'https://owodjfgrmtltmfpqvlot.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93b2RqZmdybXRsdG1mcHF2bG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1MjA5MDUsImV4cCI6MjA4NjA5NjkwNX0.7Lb0Ke204EEvNLEOq1i9lx0T8UnvM_xWDaRHGadRwAg';
+  const supabase = createClient(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
+  );
 
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  function revealAllClaimCodes() {
+    document.querySelectorAll<HTMLElement>('#claim-code').forEach((el) => el.classList.add('visible'));
+    const heroNote = document.getElementById('hero-note');
+    if (heroNote) heroNote.style.display = 'none';
+  }
 
   document.querySelectorAll<HTMLFormElement>('#waitlist-form').forEach((form) => {
     form.addEventListener('submit', async (event) => {
@@ -41,12 +53,14 @@
           if (error.code === '23505') {
             message.textContent = "You're already on the list!";
             message.className = 'form-message success';
+            revealAllClaimCodes();
           } else {
             throw error;
           }
         } else {
           message.textContent = "You're on the waitlist!";
           message.className = 'form-message success';
+          revealAllClaimCodes();
           form.reset();
         }
       } catch {
@@ -58,21 +72,33 @@
       }
     });
   });
+
+  // Copy claim code on tap
+  document.querySelectorAll<HTMLElement>('#claim-value').forEach((el) => {
+    el.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(el.textContent ?? '');
+      const hint = el.parentElement?.querySelector('#claim-hint');
+      if (hint) {
+        hint.textContent = 'Copied!';
+        setTimeout(() => { hint.textContent = 'Tap the code to copy it'; }, 2000);
+      }
+    });
+  });
 </script>
 
 <style>
   .waitlist-form {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .form-row {
     display: flex;
     gap: 0.5rem;
     max-width: 440px;
-  }
-
-  .form-row :global(:root) .form-row {
-    /* centered when inside centered parent */
+    width: 100%;
   }
 
   input[type='email'] {
@@ -133,6 +159,65 @@
 
   .form-message.error {
     color: var(--wind-high);
+  }
+
+  .claim-code {
+    display: none;
+    margin-top: 1.25rem;
+    padding: 1.5rem 1.25rem 2rem;
+    background: var(--bg-subtle);
+    border-radius: 12px;
+    text-align: center;
+    max-width: 440px;
+    box-shadow: 0 4px 24px rgba(100, 60, 160, 0.25), 0 0 48px rgba(120, 80, 180, 0.12);
+  }
+
+  .claim-code.visible {
+    display: block;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .claim-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .claim-value {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    padding: 0.25rem 0.75rem;
+    background: var(--bg);
+    border: 1.5px dashed var(--accent);
+    border-radius: 8px;
+    user-select: all;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .claim-value:active {
+    background: var(--border);
+  }
+
+  .claim-hint {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin-top: 0.5rem;
+  }
+
+  .claim-expiry {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 0.75rem;
+    font-style: italic;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @media (max-width: 480px) {
