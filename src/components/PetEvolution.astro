@@ -51,7 +51,7 @@ const essences = [
         <span class="symbol">&rarr;</span>
         {plantPhases.map((phase, index) => (
           <Fragment>
-            <img src={`${base}images/${phase.img}.png`} alt={`Plant phase ${index + 1}`} class="phase-img" style={`width: ${phase.size}px; height: ${phase.size}px;`} />
+            <img src={`${base}images/${phase.img}.png`} alt={`Plant phase ${index + 1}`} class="phase-img" style={`--phase-size: ${phase.size}px;`} />
             {index < plantPhases.length - 1 && <span class="symbol">&rarr;</span>}
           </Fragment>
         ))}
@@ -158,8 +158,8 @@ const essences = [
   }
 
   .phase-img {
-    width: 64px;
-    height: 64px;
+    width: var(--phase-size, 64px);
+    height: var(--phase-size, 64px);
     object-fit: contain;
   }
 
@@ -180,11 +180,18 @@ const essences = [
 
     .evolution-card {
       padding: 2rem 1.5rem;
+      max-width: calc(100vw - 2rem);
+      box-sizing: border-box;
+    }
+
+    .evolution-phases {
+      gap: 0.5rem;
     }
 
     .phase-img {
-      width: 52px;
-      height: 52px;
+      --phase-size: 52px;
+      width: var(--phase-size);
+      height: var(--phase-size);
     }
 
     .essence-img {
@@ -192,9 +199,38 @@ const essences = [
       height: 36px;
     }
 
+    .symbol {
+      font-size: 1.25rem;
+    }
+
     .essence-item img {
       width: 48px;
       height: 48px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .evolution-card {
+      padding: 1.5rem 1rem;
+    }
+
+    .evolution-phases {
+      gap: 0.35rem;
+    }
+
+    .phase-img {
+      --phase-size: 40px;
+      width: var(--phase-size);
+      height: var(--phase-size);
+    }
+
+    .essence-img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .symbol {
+      font-size: 1rem;
     }
   }
 </style>
