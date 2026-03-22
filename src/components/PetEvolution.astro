@@ -87,7 +87,7 @@ const essences = [
     max-width: 480px;
   }
 
-  /* Essence carousel */
+  /* Essence carousel — break out of .container padding */
   .essence-carousel {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
@@ -95,6 +95,7 @@ const essences = [
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     margin-bottom: 0;
+    padding: 0 2rem;
   }
 
   .essence-carousel::-webkit-scrollbar {
@@ -102,9 +103,11 @@ const essences = [
   }
 
   .essence-track {
-    display: inline-flex;
+    display: flex;
     gap: 1.25rem;
-    padding: 0 2rem 0.5rem;
+    padding-bottom: 0.5rem;
+    width: max-content;
+    margin-inline: auto;
   }
 
   .essence-item {
@@ -174,8 +177,8 @@ const essences = [
       font-size: 2rem;
     }
 
-    .essence-track {
-      padding: 0 1.25rem 0.5rem;
+    .essence-carousel {
+      padding: 0 1.25rem;
     }
 
     .evolution-card {
