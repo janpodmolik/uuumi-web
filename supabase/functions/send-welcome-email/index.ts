@@ -1,6 +1,12 @@
 import "@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from "@supabase/supabase-js";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")!;
+
+const supabaseAdmin = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+);
 
 interface WebhookPayload {
   type: "INSERT";
@@ -21,7 +27,7 @@ Deno.serve(async (req) => {
       return new Response("Ignored", { status: 200 });
     }
 
-    const email = payload.record.email;
+    const { id, email } = payload.record;
     const theme = payload.record.theme || "dark";
 
     const isDark = theme === "dark";
@@ -129,9 +135,16 @@ Deno.serve(async (req) => {
     const data = await res.json();
 
     if (!res.ok) {
-      console.error("Resend error:", data);
+      console.error(`Resend error (HTTP ${res.status}) for ${email}:`, data);
+      // email_sent stays false — can be retried later
       return new Response(JSON.stringify({ error: data }), { status: 500 });
     }
+
+    // Mark email as successfully sent
+    await supabaseAdmin
+      .from("waitlist")
+      .update({ email_sent: true })
+      .eq("id", id);
 
     return new Response(JSON.stringify({ success: true, id: data.id }), {
       status: 200,

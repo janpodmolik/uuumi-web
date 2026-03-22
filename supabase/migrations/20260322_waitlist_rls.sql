@@ -33,3 +33,11 @@ ALTER TABLE public.rate_limits ENABLE ROW LEVEL SECURITY;
 -- SELECT cron.schedule('cleanup-rate-limits', '*/5 * * * *',
 --   $$DELETE FROM public.rate_limits WHERE window_start < now() - interval '5 minutes'$$
 -- );
+
+-- =============================================================================
+-- Add email_sent flag to waitlist table
+-- =============================================================================
+-- Tracks whether the welcome email was successfully sent.
+-- If Resend returns an error (e.g. 429 rate limit), email_sent stays false.
+-- Query unsent: SELECT * FROM waitlist WHERE email_sent = false;
+ALTER TABLE public.waitlist ADD COLUMN IF NOT EXISTS email_sent BOOLEAN NOT NULL DEFAULT false;
