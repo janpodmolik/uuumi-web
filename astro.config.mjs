@@ -3,6 +3,5 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://janpodmolik.github.io',
-  base: '/uuumi-web/',
+  site: 'https://uuumi.app',
 });
