@@ -9,14 +9,13 @@
     />
     <button type="submit">Join the Waitlist</button>
   </div>
-  <!-- Honeypot field — invisible to humans, bots will fill it -->
   <input
     type="text"
-    name="website"
+    name="email_verification"
     autocomplete="off"
     tabindex="-1"
     aria-hidden="true"
-    class="hp-field"
+    class="email-verify-field"
   />
   <label class="consent-label">
     <input type="checkbox" name="consent" required />
@@ -41,7 +40,7 @@
 
       const formData = new FormData(form);
       const email = formData.get('email') as string;
-      const honeypot = formData.get('website') as string;
+      const honeypot = formData.get('email_verification') as string;
       const message = form.querySelector('#form-message') as HTMLParagraphElement;
       const button = form.querySelector('button') as HTMLButtonElement;
 
@@ -101,24 +100,23 @@
 </script>
 
 <style>
-  /* Honeypot — visually hidden but accessible to bots */
-  .hp-field {
+  .email-verify-field {
     position: absolute;
-    left: -9999px;
-    top: -9999px;
-    opacity: 0;
-    height: 0;
-    width: 0;
-    z-index: -1;
-    pointer-events: none;
-    tab-index: -1;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    white-space: nowrap;
   }
 
   .waitlist-form {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .form-row {
@@ -176,16 +174,27 @@
 
   .form-message {
     margin-top: 0.75rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 600;
     min-height: 1.4em;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    max-width: 440px;
+    width: 100%;
+  }
+
+  .form-message:empty {
+    padding: 0;
   }
 
   .form-message.success {
     color: var(--accent);
+    background: rgba(52, 199, 89, 0.1);
   }
 
   .form-message.error {
     color: var(--wind-high);
+    background: rgba(255, 69, 58, 0.1);
   }
 
   .consent-label {
@@ -214,6 +223,12 @@
 
   .consent-label a:hover {
     color: var(--accent-hover);
+  }
+
+  @media (max-width: 900px) {
+    .waitlist-form {
+      align-items: center;
+    }
   }
 
   @media (max-width: 480px) {
