@@ -25,6 +25,12 @@
 <script>
   import { createClient } from '@supabase/supabase-js';
 
+  declare global {
+    interface Window {
+      dataLayer?: Record<string, unknown>[];
+    }
+  }
+
   const supabase = createClient(
     import.meta.env.PUBLIC_SUPABASE_URL,
     import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
@@ -65,6 +71,7 @@
             message.textContent = "You're already on the list!";
             message.className = 'form-message success';
             revealAllClaimCodes();
+            window.dataLayer?.push({ event: 'waitlist_duplicate' });
           } else {
             throw error;
           }
@@ -73,6 +80,7 @@
           message.className = 'form-message success';
           revealAllClaimCodes();
           form.reset();
+          window.dataLayer?.push({ event: 'waitlist_signup' });
         }
       } catch {
         message.textContent = 'Something went wrong. Please try again.';
@@ -88,6 +96,7 @@
   document.querySelectorAll<HTMLElement>('#claim-value').forEach((el) => {
     el.addEventListener('click', async () => {
       await navigator.clipboard.writeText(el.textContent ?? '');
+      window.dataLayer?.push({ event: 'claim_code_copy' });
       const hint = el.parentElement?.querySelector('#claim-hint');
       if (hint) {
         hint.textContent = 'Copied!';

@@ -80,6 +80,12 @@
     prefs.timestamp = new Date().toISOString();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
     pushConsent(prefs);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'consent_update',
+      consent_analytics: prefs.analytics,
+      consent_marketing: prefs.marketing
+    });
     hideBanner();
     hideModal();
   }
