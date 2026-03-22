@@ -23,12 +23,6 @@
     <span>I agree to the <a href="/privacy" target="_blank">Privacy Policy</a></span>
   </label>
   <p class="form-message" id="form-message"></p>
-  <div class="claim-code" id="claim-code">
-    <p class="claim-label">Your OG essence claim code:</p>
-    <span class="claim-value" id="claim-value">UUUBELIEVER</span>
-    <p class="claim-hint" id="claim-hint">Tap the code to copy it</p>
-    <p class="claim-expiry">Valid for the first 3 months after release. We'll remind you before launch.</p>
-  </div>
 </form>
 
 <script>
@@ -40,12 +34,6 @@
 
   const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL;
   const SUPABASE_ANON_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-
-  function revealAllClaimCodes() {
-    document.querySelectorAll<HTMLElement>('#claim-code').forEach((el) => el.classList.add('visible'));
-    const heroNote = document.getElementById('hero-note');
-    if (heroNote) heroNote.style.display = 'none';
-  }
 
   document.querySelectorAll<HTMLFormElement>('#waitlist-form').forEach((form) => {
     form.addEventListener('submit', async (event) => {
@@ -94,12 +82,10 @@
         if (data.duplicate) {
           message.textContent = "You're already on the list!";
           message.className = 'form-message success';
-          revealAllClaimCodes();
           window.dataLayer?.push({ event: 'waitlist_duplicate' });
         } else {
-          message.textContent = "You're on the waitlist!";
+          message.textContent = "You're on the waitlist! Check your inbox.";
           message.className = 'form-message success';
-          revealAllClaimCodes();
           form.reset();
           window.dataLayer?.push({ event: 'waitlist_signup' });
         }
@@ -109,19 +95,6 @@
       } finally {
         button.disabled = false;
         button.textContent = 'Join the Waitlist';
-      }
-    });
-  });
-
-  // Copy claim code on tap
-  document.querySelectorAll<HTMLElement>('#claim-value').forEach((el) => {
-    el.addEventListener('click', async () => {
-      await navigator.clipboard.writeText(el.textContent ?? '');
-      window.dataLayer?.push({ event: 'claim_code_copy' });
-      const hint = el.parentElement?.querySelector('#claim-hint');
-      if (hint) {
-        hint.textContent = 'Copied!';
-        setTimeout(() => { hint.textContent = 'Tap the code to copy it'; }, 2000);
       }
     });
   });
@@ -241,65 +214,6 @@
 
   .consent-label a:hover {
     color: var(--accent-hover);
-  }
-
-  .claim-code {
-    display: none;
-    margin-top: 1.25rem;
-    padding: 1.5rem 1.25rem 2rem;
-    background: var(--bg-subtle);
-    border-radius: 12px;
-    text-align: center;
-    max-width: 440px;
-    box-shadow: 0 4px 24px rgba(100, 60, 160, 0.25), 0 0 48px rgba(120, 80, 180, 0.12);
-  }
-
-  .claim-code.visible {
-    display: block;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .claim-label {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-  }
-
-  .claim-value {
-    display: inline-block;
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    padding: 0.25rem 0.75rem;
-    background: var(--bg);
-    border: 1.5px dashed var(--accent);
-    border-radius: 8px;
-    user-select: all;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .claim-value:active {
-    background: var(--border);
-  }
-
-  .claim-hint {
-    font-size: 0.8rem;
-    color: var(--text-tertiary);
-    margin-top: 0.5rem;
-  }
-
-  .claim-expiry {
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    margin-top: 0.75rem;
-    font-style: italic;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   @media (max-width: 480px) {
