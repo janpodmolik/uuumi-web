@@ -4,14 +4,23 @@ import { createClient } from "@supabase/supabase-js";
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
 const RATE_LIMIT_MAX = 3; // max 3 requests per window per IP
 
-const ALLOWED_ORIGIN = "https://uuumi.app";
+const ALLOWED_ORIGINS = [
+  "https://uuumi.app",
+  "http://localhost:4321",
+  "http://localhost:3000",
+];
 
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers":
-    "Content-Type, Authorization, apikey, x-client-info",
-};
+function getCorsHeaders(req: Request) {
+  const origin = req.headers.get("origin") || "";
+  return {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin)
+      ? origin
+      : ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers":
+      "Content-Type, Authorization, apikey, x-client-info",
+  };
+}
 
 // Reuse the admin client across requests within the same isolate
 const supabaseAdmin = createClient(
@@ -57,13 +66,13 @@ async function isRateLimited(ip: string): Promise<boolean> {
 Deno.serve(async (req) => {
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers: CORS_HEADERS });
+    return new Response(null, { status: 204, headers: getCorsHeaders(req) });
   }
 
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
       status: 405,
-      headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
   }
 
@@ -79,7 +88,7 @@ Deno.serve(async (req) => {
       JSON.stringify({ error: "Too many requests. Please try again later." }),
       {
         status: 429,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
       },
     );
   }
@@ -93,7 +102,7 @@ Deno.serve(async (req) => {
       // Return success to not reveal the trap, but do nothing
       return new Response(JSON.stringify({ success: true }), {
         status: 200,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
       });
     }
 
@@ -101,7 +110,7 @@ Deno.serve(async (req) => {
     if (!email || typeof email !== "string") {
       return new Response(JSON.stringify({ error: "Email is required." }), {
         status: 400,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
       });
     }
 
@@ -111,7 +120,7 @@ Deno.serve(async (req) => {
         JSON.stringify({ error: "Invalid email address." }),
         {
           status: 400,
-          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+          headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
         },
       );
     }
@@ -127,7 +136,7 @@ Deno.serve(async (req) => {
           JSON.stringify({ success: true, duplicate: true }),
           {
             status: 200,
-            headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+            headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
           },
         );
       }
@@ -137,20 +146,20 @@ Deno.serve(async (req) => {
         JSON.stringify({ error: "Something went wrong. Please try again." }),
         {
           status: 500,
-          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+          headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
         },
       );
     }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
-      headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
   } catch (err) {
     console.error("Error:", err);
     return new Response(JSON.stringify({ error: "Invalid request." }), {
       status: 400,
-      headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
   }
 });
