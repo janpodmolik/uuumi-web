@@ -30,4 +30,4 @@ pnpm-debug.log*
 email-preview.html
 
 # test scripts
-scripts/spam-test*.sh
+scripts/
