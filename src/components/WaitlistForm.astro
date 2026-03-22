@@ -9,6 +9,10 @@
     />
     <button type="submit">Join the Waitlist</button>
   </div>
+  <label class="consent-label">
+    <input type="checkbox" name="consent" required />
+    <span>I agree to the <a href="/privacy" target="_blank">Privacy Policy</a></span>
+  </label>
   <p class="form-message" id="form-message"></p>
   <div class="claim-code" id="claim-code">
     <p class="claim-label">Your OG essence claim code:</p>
@@ -40,6 +44,13 @@
       const email = formData.get('email') as string;
       const message = form.querySelector('#form-message') as HTMLParagraphElement;
       const button = form.querySelector('button') as HTMLButtonElement;
+
+      const consent = form.querySelector<HTMLInputElement>('input[name="consent"]');
+      if (!consent?.checked) {
+        message.textContent = 'Please agree to the Privacy Policy.';
+        message.className = 'form-message error';
+        return;
+      }
 
       button.disabled = true;
       button.textContent = 'Joining...';
@@ -159,6 +170,34 @@
 
   .form-message.error {
     color: var(--wind-high);
+  }
+
+  .consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    max-width: 440px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .consent-label input[type='checkbox'] {
+    margin-top: 0.15rem;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .consent-label a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .consent-label a:hover {
+    color: var(--accent-hover);
   }
 
   .claim-code {

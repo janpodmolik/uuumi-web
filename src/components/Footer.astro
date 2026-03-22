@@ -9,6 +9,8 @@ const year = new Date().getFullYear();
       <a href="https://www.youtube.com/@janpodmolik" target="_blank" rel="noopener noreferrer">YouTube</a>
       <a href="https://www.instagram.com/janpodmolik" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://www.tiktok.com/@janpodmolik" target="_blank" rel="noopener noreferrer">TikTok</a>
+      <a href="/privacy">Privacy Policy</a>
+      <button class="cookie-settings-btn" id="open-cookie-settings">Cookies</button>
     </div>
   </div>
 </footer>
@@ -37,8 +39,20 @@ const year = new Date().getFullYear();
     transition: color 0.2s;
   }
 
-  .footer-links a:hover {
+  .footer-links a:hover,
+  .cookie-settings-btn:hover {
     color: var(--text-primary);
+  }
+
+  .cookie-settings-btn {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
   }
 
   @media (max-width: 480px) {
@@ -49,3 +63,9 @@ const year = new Date().getFullYear();
     }
   }
 </style>
+
+<script is:inline>
+  document.getElementById('open-cookie-settings')?.addEventListener('click', function() {
+    if (window.__openCookieSettings) window.__openCookieSettings();
+  });
+</script>
