@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         from: "Uuumi <hello@uuumi.app>",
         to: [email],
-        subject: "You're in. Your Uuumi is waiting.",
+        subject: "Welcome in. Your future Uuumi is waiting.",
         html: `
 <!DOCTYPE html>
 <html>
@@ -79,18 +79,18 @@ Deno.serve(async (req) => {
             <td style="background: ${cardBg}; border-radius: 20px; padding: 40px 32px; border: 1px solid ${cardBorder};">
 
               <h1 style="margin: 0 0 8px; font-size: 28px; font-weight: 800; color: ${heading}; letter-spacing: -0.03em; text-align: center; line-height: 1.2;">
-                You're in.
+                Welcome in.
               </h1>
               <p style="margin: 0 0 28px; font-size: 16px; color: ${subtext}; text-align: center; line-height: 1.6;">
-                Your screen time just got a face.
+                Your future Uuumi is waiting.
               </p>
 
               <p style="margin: 0 0 16px; font-size: 15px; color: ${body}; line-height: 1.7;">
-                You've joined the Uuumi waitlist — and your future pet is already counting on you. Less scrolling means a happier Uuumi. The more you scroll, the harder the wind blows.
+                Uuumi is built around a simple idea: your screen time affects something you care about. The way you use your phone will shape your companion's world, mood, and evolution.
               </p>
 
               <p style="margin: 0 0 24px; font-size: 15px; color: ${body}; line-height: 1.7;">
-                We'll let you know the moment it's time to meet yours.
+                As an early supporter, you've unlocked an OG Essence claim code to use at launch.
               </p>
 
               <!-- Claim code box -->
