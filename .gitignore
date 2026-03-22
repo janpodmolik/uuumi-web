@@ -22,3 +22,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# editor settings (local)
+.vscode/settings.json
+
+# dev preview files
+email-preview.html
