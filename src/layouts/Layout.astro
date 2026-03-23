@@ -93,6 +93,12 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://uuumi.app');
     <slot />
 
     <script>
+      // Disable browser scroll restoration — always start at top
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+
       // Scroll reveal
       const observer = new IntersectionObserver(
         (entries) => {
@@ -107,6 +113,52 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://uuumi.app');
       );
 
       document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+      // When clicking an anchor link, prevent the default scroll,
+      // instantly reveal all .reveal elements, eagerly load all lazy
+      // images above the target, then scroll after layout settles.
+      document.addEventListener('click', (e) => {
+        const link = (e.target as HTMLElement)?.closest('a[href^="#"]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href) return;
+        const target = document.querySelector(href) as HTMLElement | null;
+        if (!target) return;
+
+        e.preventDefault();
+
+        // Reveal ALL hidden elements so layout is fully resolved
+        document.querySelectorAll('.reveal:not(.visible)').forEach((el) => {
+          el.classList.add('visible');
+          observer.unobserve(el);
+        });
+
+        // Force-load all lazy images above the target and wait for them
+        const targetTop = target.getBoundingClientRect().top + window.scrollY;
+        const pending: Promise<void>[] = [];
+        document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]').forEach((img) => {
+          const imgTop = img.getBoundingClientRect().top + window.scrollY;
+          if (imgTop < targetTop) {
+            img.loading = 'eager';
+            if (!img.complete) {
+              pending.push(new Promise((resolve) => {
+                img.addEventListener('load', () => resolve(), { once: true });
+                img.addEventListener('error', () => resolve(), { once: true });
+                img.src = img.src;
+              }));
+            }
+          }
+        });
+
+        // Scroll after all images have loaded (with 2s timeout fallback)
+        const doScroll = () => target.scrollIntoView({ behavior: 'smooth' });
+        if (pending.length > 0) {
+          const timeout = new Promise<void>((r) => setTimeout(r, 2000));
+          Promise.race([Promise.all(pending), timeout]).then(() => requestAnimationFrame(doScroll));
+        } else {
+          requestAnimationFrame(doScroll);
+        }
+      });
     </script>
 
     <CookieConsent />

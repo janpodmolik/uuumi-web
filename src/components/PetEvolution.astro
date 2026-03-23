@@ -95,7 +95,7 @@ const essences = [
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     margin-bottom: 0;
-    padding: 0 2rem;
+    text-align: center;
   }
 
   .essence-carousel::-webkit-scrollbar {
@@ -103,11 +103,9 @@ const essences = [
   }
 
   .essence-track {
-    display: flex;
+    display: inline-flex;
     gap: 1.25rem;
-    padding-bottom: 0.5rem;
-    width: max-content;
-    margin-inline: auto;
+    padding: 0 2rem 0.5rem;
   }
 
   .essence-item {
@@ -177,8 +175,8 @@ const essences = [
       font-size: 2rem;
     }
 
-    .essence-carousel {
-      padding: 0 1.25rem;
+    .essence-track {
+      padding: 0 1.25rem 0.5rem;
     }
 
     .evolution-card {
