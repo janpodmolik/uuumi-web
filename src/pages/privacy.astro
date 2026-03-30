@@ -1,130 +1,202 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
 ---
 
 <Layout
-  title="Privacy Policy — Uuumi"
-  description="How Uuumi handles your data. We only collect your email to notify you about our launch."
+  title="Privacy Policy — Uuumi App"
+  description="How the Uuumi app handles your data. Learn what we collect, how we use it, and your rights."
 >
-  <Navbar />
-  <main class="privacy">
+  <main class="legal">
     <div class="container content">
       <h1>Privacy Policy</h1>
-      <p class="updated">Last updated: March 22, 2026</p>
+      <p class="updated">Last updated: April 7, 2026</p>
 
       <section>
-        <h2>Who we are</h2>
+        <h2>Introduction</h2>
         <p>
-          Uuumi is operated by Jan Podmolik. If you have any questions about how we handle your data,
-          you can reach us at <a href="mailto:info@uuumi.app">info@uuumi.app</a>.
+          Uuumi ("we", "our", "us") is a screen time management app with a virtual pet,
+          operated by Jan Podmolík. This policy explains what data we collect, how we use it,
+          and your rights regarding that data.
+        </p>
+        <p>
+          If you have any questions, contact us at
+          <a href="mailto:info@uuumi.app">info@uuumi.app</a>.
         </p>
       </section>
 
       <section>
-        <h2>What data we collect</h2>
-        <p>
-          We collect only your <strong>email address</strong> when you sign up for the Uuumi waitlist.
-          That's it — no name, no phone number, no browsing history.
-        </p>
-      </section>
+        <h2>Information we collect</h2>
 
-      <section>
-        <h2>Why we collect it</h2>
-        <p>We use your email to:</p>
+        <h3>Account information</h3>
+        <p>When you create an account, we collect:</p>
         <ul>
-          <li>Send you your OG essence claim code after signing up</li>
-          <li>Notify you when Uuumi is ready to launch</li>
-          <li>Occasionally share product updates and news about Uuumi</li>
+          <li><strong>Email address</strong> — provided directly or through Sign in with Apple / Google</li>
+          <li><strong>Authentication data</strong> — securely managed by our backend provider (Supabase)</li>
         </ul>
-        <p>We keep emails to a minimum — no spam, no third-party promotions. Every email you receive will be about Uuumi. You can unsubscribe at any time by contacting us.</p>
-      </section>
-
-      <section>
-        <h2>Legal basis</h2>
         <p>
-          We process your email based on your <strong>explicit consent</strong>, which you give by
-          checking the consent checkbox on the waitlist form. You can withdraw your consent at any
-          time by contacting us.
+          If you use Sign in with Apple, you can choose to hide your real email address.
+        </p>
+
+        <h3>App data synced to the cloud</h3>
+        <p>To enable cross-device sync and backup, we store the following on our servers:</p>
+        <ul>
+          <li>Pet information (name, evolution history, daily stats)</li>
+          <li>Screen time goals and limit settings</li>
+          <li>Aggregated usage statistics (total daily usage, hourly summaries)</li>
+          <li>Break history (duration, type, completion)</li>
+          <li>Coin balance and unlocked content</li>
+          <li>User preferences and settings</li>
+        </ul>
+
+        <h3>Data that stays on your device</h3>
+        <p>The following data is <strong>never sent to our servers</strong>:</p>
+        <ul>
+          <li>Names of specific apps, websites, or categories you use</li>
+          <li>Individual app usage data and tokens from Screen Time / Family Controls</li>
+          <li>Detailed per-app screen time breakdowns</li>
+        </ul>
+        <p>
+          We only sync aggregated usage totals — we never know which specific apps you use or for how long.
+        </p>
+
+        <h3>Analytics</h3>
+        <p>
+          We use <strong>Statsig</strong> to collect anonymous usage analytics, such as which features
+          are used, purchase events, and app lifecycle events. This data is tied to a random user ID
+          and does not include personal information like your name or email.
+        </p>
+
+        <h3>Purchases</h3>
+        <p>
+          All payments are processed by <strong>Apple</strong> through the App Store. We do not collect,
+          process, or store any payment information. We only receive confirmation of your subscription
+          or purchase status from Apple.
         </p>
       </section>
 
       <section>
-        <h2>Who processes your data</h2>
-        <p>Your email is handled by the following services:</p>
+        <h2>How we use your data</h2>
+        <p>We use the information we collect to:</p>
         <ul>
-          <li><strong>Supabase</strong> — stores your email in our database</li>
-          <li><strong>Resend</strong> — delivers the welcome email to your inbox</li>
-          <li><strong>Google</strong> — analytics and ad measurement via Google Tag Manager (only with your consent)</li>
+          <li>Provide and maintain the Uuumi app and its core features</li>
+          <li>Sync your progress across devices</li>
+          <li>Process and manage your subscription</li>
+          <li>Improve the app through anonymous analytics</li>
+          <li>Respond to your support requests or feedback</li>
         </ul>
-        <p>All services are GDPR-compliant and process data on our behalf.</p>
       </section>
 
       <section>
-        <h2>How long we keep it</h2>
+        <h2>Third-party services</h2>
+        <p>We use the following third-party services:</p>
+        <ul>
+          <li><strong>Supabase</strong> — authentication and cloud data storage</li>
+          <li><strong>Statsig</strong> — anonymous analytics and feature flags</li>
+          <li><strong>Apple (StoreKit)</strong> — in-app purchase and subscription processing</li>
+        </ul>
         <p>
-          Your email is stored until you request its deletion or until 12 months after Uuumi
-          launches — whichever comes first. After that, it's permanently deleted.
+          We do not sell your personal information to third parties. We do not use
+          any advertising networks or tracking pixels within the app.
+        </p>
+      </section>
+
+      <section>
+        <h2>Data retention</h2>
+        <p>
+          We retain your data for as long as your account is active. If you delete your account,
+          all your data is permanently removed from our servers. Local data on your device is
+          also cleared upon sign-out.
+        </p>
+      </section>
+
+      <section>
+        <h2>Data security</h2>
+        <p>
+          We protect your data using industry-standard measures, including encrypted connections (TLS),
+          row-level security policies on our database, and secure authentication flows. However, no
+          method of electronic storage or transmission is 100% secure.
+        </p>
+      </section>
+
+      <section>
+        <h2>Children's privacy</h2>
+        <p>
+          Uuumi is not directed at children under the age of 13. We do not knowingly collect personal
+          information from children under 13. If you believe a child has provided us with personal
+          information, please contact us and we will delete it promptly.
         </p>
       </section>
 
       <section>
         <h2>Your rights</h2>
-        <p>Under GDPR, you have the right to:</p>
+        <p>Depending on your location, you may have the right to:</p>
         <ul>
-          <li>Access the data we hold about you</li>
+          <li>Access the personal data we hold about you</li>
           <li>Correct any inaccurate data</li>
           <li>Request deletion of your data</li>
-          <li>Restrict how we process your data</li>
+          <li>Restrict or object to processing of your data</li>
           <li>Export your data (data portability)</li>
-          <li>Withdraw your consent at any time</li>
+          <li>Withdraw consent at any time</li>
         </ul>
         <p>
-          To exercise any of these rights, email us at
-          <a href="mailto:info@uuumi.app">info@uuumi.app</a>. We'll respond within 30 days.
+          You can delete your account and all associated data directly within the app
+          (Profile → Delete Account). For any other requests, email us at
+          <a href="mailto:info@uuumi.app">info@uuumi.app</a> and we will respond within 30 days.
         </p>
       </section>
 
       <section>
-        <h2>Cookies &amp; tracking</h2>
+        <h2>Notifications</h2>
         <p>
-          We use Google Tag Manager to manage analytics and marketing tags on this website.
-          When you first visit, a consent banner asks you to choose which categories of cookies
-          you allow. Your choices are saved in your browser's localStorage and respected on
-          every subsequent visit.
+          Uuumi uses <strong>local notifications only</strong> — they are generated on your device
+          and never pass through our servers. We do not use push notification services. You can
+          manage notification permissions in your device settings at any time.
         </p>
-        <p>We categorise cookies as follows:</p>
-        <ul>
-          <li><strong>Necessary</strong> — Required for basic site functionality (theme preference).
-            These do not require consent and use localStorage only.</li>
-          <li><strong>Analytics</strong> — Help us understand how visitors use the site
-            (e.g. Google Analytics). Only activated if you give consent.</li>
-          <li><strong>Marketing</strong> — Used to deliver relevant ads and measure campaign
-            effectiveness (e.g. Facebook Pixel, TikTok Pixel). Only activated if you give consent.</li>
-        </ul>
+      </section>
+
+      <section>
+        <h2>Changes to this policy</h2>
         <p>
-          You can change your cookie preferences at any time by clicking "Cookies" in the footer.
+          We may update this Privacy Policy from time to time. If we make significant changes,
+          we will notify you through the app. The "Last updated" date at the top of this page
+          reflects the most recent revision.
         </p>
+      </section>
+
+      <section>
+        <h2>Contact us</h2>
         <p>
-          We use Google Consent Mode v2 to ensure that no analytics or marketing
-          data is collected until you explicitly opt in. By default, all non-essential cookies
-          are denied.
+          If you have any questions about this Privacy Policy, please contact us at
+          <a href="mailto:info@uuumi.app">info@uuumi.app</a>.
         </p>
       </section>
     </div>
   </main>
-  <Footer />
 </Layout>
 
 <style>
-  .privacy {
-    padding-top: 7rem;
+  .legal {
+    padding-top: 4rem;
     padding-bottom: 4rem;
+    min-height: 100vh;
+    background: var(--bg-primary);
   }
 
   .content {
     max-width: 720px;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--text-primary);
   }
 
   h1 {
@@ -150,6 +222,14 @@ import Footer from '../components/Footer.astro';
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
   }
 
   p {

@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Privacy Policy — Uuumi"
+  description="How Uuumi handles your data. We only collect your email to notify you about our launch."
+>
+  <Navbar />
+  <main class="privacy">
+    <div class="container content">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: March 22, 2026</p>
+
+      <section>
+        <h2>Who we are</h2>
+        <p>
+          Uuumi is operated by Jan Podmolik. If you have any questions about how we handle your data,
+          you can reach us at <a href="mailto:info@uuumi.app">info@uuumi.app</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>What data we collect</h2>
+        <p>
+          We collect only your <strong>email address</strong> when you sign up for the Uuumi waitlist.
+          That's it — no name, no phone number, no browsing history.
+        </p>
+      </section>
+
+      <section>
+        <h2>Why we collect it</h2>
+        <p>We use your email to:</p>
+        <ul>
+          <li>Send you your OG essence claim code after signing up</li>
+          <li>Notify you when Uuumi is ready to launch</li>
+          <li>Occasionally share product updates and news about Uuumi</li>
+        </ul>
+        <p>We keep emails to a minimum — no spam, no third-party promotions. Every email you receive will be about Uuumi. You can unsubscribe at any time by contacting us.</p>
+      </section>
+
+      <section>
+        <h2>Legal basis</h2>
+        <p>
+          We process your email based on your <strong>explicit consent</strong>, which you give by
+          checking the consent checkbox on the waitlist form. You can withdraw your consent at any
+          time by contacting us.
+        </p>
+      </section>
+
+      <section>
+        <h2>Who processes your data</h2>
+        <p>Your email is handled by the following services:</p>
+        <ul>
+          <li><strong>Supabase</strong> — stores your email in our database</li>
+          <li><strong>Resend</strong> — delivers the welcome email to your inbox</li>
+          <li><strong>Google</strong> — analytics and ad measurement via Google Tag Manager (only with your consent)</li>
+        </ul>
+        <p>All services are GDPR-compliant and process data on our behalf.</p>
+      </section>
+
+      <section>
+        <h2>How long we keep it</h2>
+        <p>
+          Your email is stored until you request its deletion or until 12 months after Uuumi
+          launches — whichever comes first. After that, it's permanently deleted.
+        </p>
+      </section>
+
+      <section>
+        <h2>Your rights</h2>
+        <p>Under GDPR, you have the right to:</p>
+        <ul>
+          <li>Access the data we hold about you</li>
+          <li>Correct any inaccurate data</li>
+          <li>Request deletion of your data</li>
+          <li>Restrict how we process your data</li>
+          <li>Export your data (data portability)</li>
+          <li>Withdraw your consent at any time</li>
+        </ul>
+        <p>
+          To exercise any of these rights, email us at
+          <a href="mailto:info@uuumi.app">info@uuumi.app</a>. We'll respond within 30 days.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cookies &amp; tracking</h2>
+        <p>
+          We use Google Tag Manager to manage analytics and marketing tags on this website.
+          When you first visit, a consent banner asks you to choose which categories of cookies
+          you allow. Your choices are saved in your browser's localStorage and respected on
+          every subsequent visit.
+        </p>
+        <p>We categorise cookies as follows:</p>
+        <ul>
+          <li><strong>Necessary</strong> — Required for basic site functionality (theme preference).
+            These do not require consent and use localStorage only.</li>
+          <li><strong>Analytics</strong> — Help us understand how visitors use the site
+            (e.g. Google Analytics). Only activated if you give consent.</li>
+          <li><strong>Marketing</strong> — Used to deliver relevant ads and measure campaign
+            effectiveness (e.g. Facebook Pixel, TikTok Pixel). Only activated if you give consent.</li>
+        </ul>
+        <p>
+          You can change your cookie preferences at any time by clicking "Cookies" in the footer.
+        </p>
+        <p>
+          We use Google Consent Mode v2 to ensure that no analytics or marketing
+          data is collected until you explicitly opt in. By default, all non-essential cookies
+          are denied.
+        </p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .privacy {
+    padding-top: 7rem;
+    padding-bottom: 4rem;
+  }
+
+  .content {
+    max-width: 720px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .updated {
+    font-size: 0.9rem;
+    color: var(--text-tertiary);
+    margin-bottom: 3rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  ul {
+    margin: 0.5rem 0 0.75rem 1.5rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  li {
+    font-size: 1rem;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  a:hover {
+    color: var(--accent-hover);
+  }
+
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

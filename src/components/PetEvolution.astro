@@ -25,19 +25,21 @@ const essences = [
     <p class="section-subtitle reveal">
       Help your Uuumi survive its first day and reward it with an essence.
     </p>
+  </div>
 
-    <!-- Essence carousel -->
-    <div class="essence-carousel reveal">
-      <div class="essence-track">
-        {essences.map((ess) => (
-          <div class="essence-item">
-            <img src={`${base}images/essences/${ess.id}.png`} alt={`${ess.name} essence`} />
-            <span class="essence-name">{ess.name}</span>
-          </div>
-        ))}
-      </div>
+  <!-- Essence carousel — lives outside .container so it can span full width naturally -->
+  <div class="essence-carousel reveal">
+    <div class="essence-track">
+      {essences.map((ess) => (
+        <div class="essence-item">
+          <img src={`${base}images/essences/${ess.id}.png`} alt={`${ess.name} essence`} />
+          <span class="essence-name">{ess.name}</span>
+        </div>
+      ))}
     </div>
+  </div>
 
+  <div class="container">
     <p class="evolution-heading reveal">
       Every day your Uuumi survives, it rewards you with an evolution.
     </p>
@@ -87,15 +89,11 @@ const essences = [
     max-width: 480px;
   }
 
-  /* Essence carousel — break out of .container padding */
+  /* Essence carousel — sits outside .container, full width */
   .essence-carousel {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin-bottom: 0;
-    text-align: center;
   }
 
   .essence-carousel::-webkit-scrollbar {
@@ -103,7 +101,8 @@ const essences = [
   }
 
   .essence-track {
-    display: inline-flex;
+    display: flex;
+    justify-content: center;
     gap: 1.25rem;
     padding: 0 2rem 0.5rem;
   }
