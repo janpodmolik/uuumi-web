@@ -1,8 +1,5 @@
 ---
-import WaitlistForm from './WaitlistForm.astro';
-import EssenceBanner from './EssenceBanner.astro';
-// Swap WaitlistForm for DownloadButton after launch:
-// import DownloadButton from './DownloadButton.astro';
+import DownloadButton from './DownloadButton.astro';
 ---
 
 <section class="hero">
@@ -14,12 +11,7 @@ import EssenceBanner from './EssenceBanner.astro';
         Less scrolling means a happier Uuumi. The more you scroll,
         the harder the wind blows.
       </p>
-      <EssenceBanner />
-
-      <WaitlistForm />
-      <!-- After launch, replace WaitlistForm with: -->
-      <!-- <DownloadButton href="https://apps.apple.com/..." /> -->
-      <p class="hero-note" id="hero-note">Be the first to know when Uuumi launches.</p>
+      <DownloadButton />
     </div>
     <div class="hero-mockup">
       <img class="screenshot-light" src={`${import.meta.env.BASE_URL}images/screenshots/home-light.png`} alt="Uuumi app screenshot – light mode" />
@@ -70,12 +62,6 @@ import EssenceBanner from './EssenceBanner.astro';
     color: var(--text-secondary);
     line-height: 1.7;
     margin-bottom: 2.5rem;
-  }
-
-  .hero-note {
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    color: var(--text-tertiary);
   }
 
   .hero-mockup {
