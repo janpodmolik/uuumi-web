@@ -9,7 +9,7 @@ import Layout from '../layouts/Layout.astro';
   <main class="legal">
     <div class="container content">
       <h1>Privacy Policy</h1>
-      <p class="updated">Last updated: April 7, 2026</p>
+      <p class="updated">Last updated: April 30, 2026</p>
 
       <section>
         <h2>Introduction</h2>
@@ -61,9 +61,16 @@ import Layout from '../layouts/Layout.astro';
 
         <h3>Analytics</h3>
         <p>
-          We use <strong>Statsig</strong> to collect anonymous usage analytics, such as which features
-          are used, purchase events, and app lifecycle events. This data is tied to a random user ID
-          and does not include personal information like your name or email.
+          We use <strong>PostHog</strong> to collect product analytics, such as which features are used,
+          purchase events, and app lifecycle events. PostHog runs on the EU instance
+          (eu.posthog.com), so analytics events are processed and stored within the European Union.
+          Events are tied to your account ID once you sign in; before sign-in they are tied to an
+          anonymous device-generated identifier.
+        </p>
+        <p>
+          We do <strong>not</strong> use session replay, screen recording, or heatmaps. We do not
+          track you across other apps or websites. You can opt out of analytics at any time in
+          <em>Profile → Privacy</em> within the app.
         </p>
 
         <h3>Purchases</h3>
@@ -81,22 +88,32 @@ import Layout from '../layouts/Layout.astro';
           <li>Provide and maintain the Uuumi app and its core features</li>
           <li>Sync your progress across devices</li>
           <li>Process and manage your subscription</li>
-          <li>Improve the app through anonymous analytics</li>
+          <li>Improve the app through product analytics</li>
           <li>Respond to your support requests or feedback</li>
         </ul>
       </section>
 
       <section>
         <h2>Third-party services</h2>
-        <p>We use the following third-party services:</p>
+        <p>The Uuumi mobile app uses the following third-party services:</p>
         <ul>
           <li><strong>Supabase</strong> — authentication and cloud data storage</li>
-          <li><strong>Statsig</strong> — anonymous analytics and feature flags</li>
-          <li><strong>Apple (StoreKit)</strong> — in-app purchase and subscription processing</li>
+          <li><strong>PostHog (EU)</strong> — product analytics, processed within the European Union</li>
+          <li><strong>Apple (Sign in with Apple, StoreKit)</strong> — authentication and in-app purchase / subscription processing</li>
+          <li><strong>Google (Sign in with Google)</strong> — authentication when you choose Google as your sign-in method</li>
         </ul>
         <p>
-          We do not sell your personal information to third parties. We do not use
-          any advertising networks or tracking pixels within the app.
+          We do not sell your personal information to third parties. The mobile app does
+          not contain any advertising networks, tracking pixels, or third-party advertising SDKs.
+        </p>
+      </section>
+
+      <section>
+        <h2>Advertising and tracking</h2>
+        <p>
+          The Uuumi mobile app does <strong>not</strong> use the device's advertising identifier
+          (IDFA) and does <strong>not</strong> track you across other companies' apps or websites.
+          The privacy manifest distributed with the app reflects this (no tracking declared).
         </p>
       </section>
 
@@ -104,8 +121,14 @@ import Layout from '../layouts/Layout.astro';
         <h2>Data retention</h2>
         <p>
           We retain your data for as long as your account is active. If you delete your account,
-          all your data is permanently removed from our servers. Local data on your device is
-          also cleared upon sign-out.
+          your account record and all linked personal data — including pets, settings, coin
+          balance, and aggregated usage history — are permanently removed from our servers via
+          cascading database deletion.
+        </p>
+        <p>
+          Any feedback or support messages you previously submitted are retained in
+          anonymized form (with your user identifier removed) so that we can continue improving
+          the App. Local data on your device is cleared upon sign-out.
         </p>
       </section>
 
@@ -151,6 +174,39 @@ import Layout from '../layouts/Layout.astro';
           Uuumi uses <strong>local notifications only</strong> — they are generated on your device
           and never pass through our servers. We do not use push notification services. You can
           manage notification permissions in your device settings at any time.
+        </p>
+      </section>
+
+      <section>
+        <h2>This website (uuumi.app)</h2>
+        <p>
+          The marketing website at uuumi.app is separate from the mobile app and uses
+          <strong>Google Tag Manager</strong> to load analytics and marketing tags subject to your
+          consent. We use Google Consent Mode v2: by default, analytics, advertising, and
+          personalization cookies are <em>denied</em> until you make a choice in the cookie banner.
+        </p>
+        <p>
+          The cookie categories are:
+        </p>
+        <ul>
+          <li><strong>Necessary</strong> — basic site functionality such as theme preference. Always on.</li>
+          <li><strong>Analytics</strong> — helps us understand how visitors use the site.</li>
+          <li><strong>Marketing</strong> — used for advertising measurement and remarketing on third-party platforms.</li>
+        </ul>
+        <p>
+          You can change your cookie preferences at any time via the "Cookie Settings" link in
+          the site footer. Your choice is stored locally in your browser. The mobile app is not
+          affected by website cookie settings.
+        </p>
+      </section>
+
+      <section>
+        <h2>Governing law</h2>
+        <p>
+          This Privacy Policy is governed by the laws of the Czech Republic. If you are located in
+          the European Economic Area or the United Kingdom, you also retain all rights granted to
+          you under the GDPR or UK GDPR, including the right to lodge a complaint with your local
+          data protection authority.
         </p>
       </section>
 
